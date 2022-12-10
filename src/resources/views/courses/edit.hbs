@@ -1,0 +1,46 @@
+<div class="mt-4">
+  <h3>UPDATE </h3>
+  {{!-- update to a dir with id --}}
+  <form class="mt-4" method="POST" action="/courses/{{course._id}}?_method=PUT">
+    <div class="mb-3">
+      <label for="name" class="form-label">Name</label>
+      <input
+        type="text"
+        class="form-control"
+        value="{{course.name}}"
+        id="name"
+        name="name"
+      />
+    </div>
+    <div class="mb-3">
+      <label for="desc" class="form-label">Description</label>
+      {{!-- textarea no need type and using child as value --}}
+      <textarea
+        class="form-control"
+        id="desc"
+        name="desc"
+      >{{course.desc}}</textarea>
+    </div>
+    <div class="mb-3">
+      <label for="videoId" class="form-label">Video Id</label>
+      <input
+        type="text"
+        class="form-control"
+        value="{{course.videoId}}"
+        id="videoId"
+        name="videoId"
+      ></input>
+    </div>
+    <div class="mb-3">
+      <label for="cute" class="form-label">Cuteness Level</label>
+      <input
+        type="text"
+        class="form-control"
+        value="{{course.cute}}"
+        id="cute"
+        name="cute"
+      />
+    </div>
+    <button type="submit" class="btn btn-primary">Update</button>
+  </form>
+</div>
