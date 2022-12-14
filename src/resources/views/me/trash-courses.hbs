@@ -1,7 +1,7 @@
 <div class="mt-4">
   <div>
-    <h3>My Respository</h3>
-    <a href="/me/trash/courses">Bin</a></div>
+    <h3>Deleted Respository</h3>
+    <a href="/me/stored/courses">Respository</a></div>
   <table class="table mt-4">
     <thead>
       <tr>
@@ -22,7 +22,11 @@
           <td>{{this.cute}}</td>
           <td>{{this.createdAt}}</td>
           <td>
-            <a href="/courses/{{this._id}}/edit" class="btn btn-link">Edit</a>
+            <a
+              href=""
+              class="btn btn-link btn-restore"
+              data-id="{{this._id}}"
+            >Restore</a>
             <a
               href=""
               class="btn btn-link"
@@ -37,8 +41,8 @@
       {{else}}
         <tr>
           <td colspan="5" class="text-center">
-            Repositories are empty.
-            <a href="/courses/create">Create Respository</a></td>
+            Deleted repositories are empty.
+            <a href="/me/stored/courses/">Respository</a></td>
         </tr>
       {{/each}}
     </tbody>
@@ -66,7 +70,7 @@
         ></button>
       </div>
       <div class="modal-body">
-        Do you want to delete this repository?
+        This action can not be restore! Continue destroy?
       </div>
       <div class="modal-footer">
         <button
@@ -78,7 +82,7 @@
           id="btn-delete-repository"
           type="button"
           class="btn btn-danger"
-        >Delete</button>
+        >Destroy</button>
       </div>
     </div>
   </div>
@@ -87,14 +91,49 @@
 {{! Delete hidden form for "submit" }}
 <form name="delete-form" method="POST">
 </form>
+{{! REstore form }}
+<form name="restore-form" method="POST">
+</form>
+
+{{! add jQuery }}
+<script
+  src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"
+></script>
+{{!--prettier-ignore--}}
 
 <script>
-  let repositoryId; const deleteForm = document.forms["delete-form"]; const
-  deleteRepository = document.getElementById('delete-repository-modal');
-  deleteRepository.addEventListener('show.bs.modal', event => { const button =
-  event.relatedTarget; repositoryId = button.getAttribute('data-id'); }); const
-  btnDeleteRepository = document.getElementById("btn-delete-repository");
-  btnDeleteRepository.onclick = function(){ deleteForm.action="/courses/"+
-  repositoryId +"?_method=DELETE"; deleteForm.submit() }
+
+  document.addEventListener("DOMContentLoaded",function(){ 
+    // get btn class name with js
+    let restoreBtn = $(".btn-restore"); 
+    let repositoryId; 
+    const deleteForm =  document.forms["delete-form"];
+    const restoreForm =  document.forms["restore-form"];
+    const deleteRepository =  document.getElementById('delete-repository-modal');
+    //listen delete btn and add event
+    deleteRepository.addEventListener('show.bs.modal', event => { 
+        const button =  event.relatedTarget;    
+        // get attribute from btn data as id
+        repositoryId = button.getAttribute('data-id'); 
+    });
+
+    const btnDeleteRepository = document.getElementById("btn-delete-repository");
+      btnDeleteRepository.onclick = function(){ 
+        deleteForm.action="/courses/"+  repositoryId +"/destroy?_method=DELETE"; 
+        deleteForm.submit() 
+    }
+
+      
+      // listen btn restore clicked - tag a will refresh page
+      restoreBtn.click(function(e){
+        e.preventDefault()
+        // with jquery, return the value from the btn clicked       
+        let repoId =  $(this).data("id")
+        // check dir - do not forget /restore
+        restoreForm.action="/courses/"+  repoId+"/restore?_method=PATCH"; 
+        restoreForm.submit() 
+        
+      })
+  })
 
 </script>
