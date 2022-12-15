@@ -1,7 +1,11 @@
 <div class="mt-4">
   <div>
     <h3>My Respository</h3>
-    <a href="/me/trash/courses">Bin</a></div>
+    {{! hbs display Bin with IF }}
+    {{#if deletedCount}}
+      <a href="/me/trash/courses">Bin ({{deletedCount}})</a>
+    {{/if}}
+  </div>
   <table class="table mt-4">
     <thead>
       <tr>
