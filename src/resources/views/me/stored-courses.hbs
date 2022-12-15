@@ -1,15 +1,37 @@
-<div class="mt-4">
+<form method="POST" name="container-form" class="mt-4" action="/courses/handle-form-action">
   <div>
     <h3>My Respository</h3>
     {{! hbs display Bin with IF }}
     {{#if deletedCount}}
       <a href="/me/trash/courses">Bin ({{deletedCount}})</a>
     {{/if}}
-  </div>
+
+    <div class="mt-4 d-flex align-items-center">
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="checkbox"
+          value=""
+          id="checkbox-all"
+        />
+        <label class="form-check-label" for="checkbox-all">
+          Select all
+        </label>
+      </div>
+      <select class="form-select select-all-options" name="action" required>
+        <option value="">-- Select action</option>
+        <option value="delete">Delete</option>
+      </select>
+      <button
+        class="btn btn-primary btn-sm disabled"
+        id="btn-apply-check"
+      >Apply</button>
+    </div>
+  </form>
   <table class="table mt-4">
     <thead>
       <tr>
-        <th scope="col">#</th>
+        <th scope="col" colspan="2">#</th>
         <th scope="col">Name</th>
         <th scope="col">Cute</th>
         <th scope="col">Date created</th>
@@ -20,6 +42,17 @@
     <tbody>
       {{#each courses}}
         <tr>
+          <td>
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                name="courseIds[]"
+                value="{{this._id}}"
+              />
+
+            </div>
+          </td>
           {{! sum from helper function- using for express-hbs library }}
           <th scope="row">{{sum @index 1}}</th>
           <td>{{this.name}}</td>
@@ -92,13 +125,75 @@
 <form name="delete-form" method="POST">
 </form>
 
+{{! add jQuery }}
+<script
+  src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"
+></script>
+
+{{!--prettier-ignore--}}
 <script>
-  let repositoryId; const deleteForm = document.forms["delete-form"]; const
-  deleteRepository = document.getElementById('delete-repository-modal');
-  deleteRepository.addEventListener('show.bs.modal', event => { const button =
-  event.relatedTarget; repositoryId = button.getAttribute('data-id'); }); const
-  btnDeleteRepository = document.getElementById("btn-delete-repository");
-  btnDeleteRepository.onclick = function(){ deleteForm.action="/courses/"+
-  repositoryId +"?_method=DELETE"; deleteForm.submit() }
+  let repositoryId;
+  let deleteForm = document.forms["delete-form"]; 
+  let containerForm = document.forms["container-form"]; 
+  let deleteRepository = document.getElementById('delete-repository-modal');
+  let checkboxAll = $("#checkbox-all")
+  let repoItemCheckbox = $('input[name="courseIds[]"]')
+  let checkAllApply = $("#btn-apply-check")
+  
+  deleteRepository.addEventListener('show.bs.modal', event => {
+    const button =  event.relatedTarget; 
+    repositoryId = button.getAttribute('data-id');
+  }); 
+  const btnDeleteRepository = document.getElementById("btn-delete-repository");
+  btnDeleteRepository.onclick = function(){ 
+    deleteForm.action="/courses/"+ repositoryId +"?_method=DELETE";
+    deleteForm.submit() 
+  }
+
+  //when checkbox all change
+  checkboxAll.change(function(){
+    let isCheckedAll = $(this).prop("checked")
+    //if(isCheckedAll){
+    //  repoItemCheckbox.prop("checked", true)
+    //}
+    //else{
+    //   repoItemCheckbox.prop("checked", false)
+    //}
+    repoItemCheckbox.prop("checked",isCheckedAll)
+    renderCheckAllApplyBtn();
+  })
+  //repo item change
+  repoItemCheckbox.change(function(){
+    //compare between checkbox length and checkbox checked length
+   let isCheckedAll = repoItemCheckbox.length === $('input[name="courseIds[]"]:checked').length;
+  // set value of checkboxAll with ischeckedAll
+  checkboxAll.prop("checked",isCheckedAll)
+    renderCheckAllApplyBtn();
+  })
+
+
+
+  // Check all submit button 
+  checkAllApply.on("submit",function(e){
+     // check with jq by func hasClass or nah
+    var isSubmittalbe = !$(this).hasClass("disabled")
+    if(isSubmittalbe){
+      e.preventDefault()
+    }
+  })
+
+
+  // rerender check all apply btn
+  function renderCheckAllApplyBtn(){
+    var checkedCount = $('input[name="courseIds[]"]:checked').length;
+    // if checkedCount > 0
+    if(checkedCount){
+      checkAllApply.removeClass("disabled")
+    }else{
+      checkAllApply.addClass("disabled")
+    }
+  }
+
+
 
 </script>

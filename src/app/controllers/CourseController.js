@@ -59,7 +59,7 @@ class CourseController {
   }
   //DELETE /courses/:id/destroy
   destroy(req, res, next) {
-    Course.deleteOne({ _id: req.params.id })
+    Course.deleteOne({ _id: req.body.course })
       .then(() => res.redirect("back"))
       .catch(next);
   }
@@ -69,6 +69,19 @@ class CourseController {
     Course.restore({ _id: req.params.id })
       .then(() => res.redirect("back"))
       .catch(next);
+  }
+  //POST /courses//handle-form-action
+  handleFormAction(req, res, next) {
+    switch (req.body.action) {
+      case "delete":
+        // read data with mongooDB with " $in: ", for a List, Array ( courseIds is an array)
+        Course.delete({ _id: { $in: req.body.courseIds } })
+          .then(() => res.redirect("back"))
+          .catch(next);
+        break;
+      default:
+        res.json({ message: "Invalid action" });
+    }
   }
 }
 module.exports = new CourseController();
