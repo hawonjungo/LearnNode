@@ -3,11 +3,20 @@ const Course = require("../models/Course");
 // the utility to handle the handlebars problem with "this"
 const { multipleMongooseToObject } = require("../../util/mongoose");
 
-class CourseController {
+class MeController {
   //GET /me/stored/courses
   storedCourses(req, res, next) {
+    let CourseQuery = Course.find({});
+    if (req.query.hasOwnProperty("_sort")) {
+      CourseQuery = CourseQuery.sort({
+        // get attributes from query url ex: column=name&type=asc
+        // name: "asc", the [""] to set attr in object
+        [req.query.column]: req.query.type,
+      });
+    }
+
     // combine 2 promises and distructuring return value as courses and deletedCount
-    Promise.all([Course.find(), Course.countDocumentsDeleted()])
+    Promise.all([CourseQuery, Course.countDocumentsDeleted()])
       .then(([courses, deletedCount]) => {
         res.render("me/stored-courses", {
           // transfer data to View ( as meController can send data to other dir in /me)
@@ -44,4 +53,4 @@ class CourseController {
       .catch(next);
   }
 }
-module.exports = new CourseController();
+module.exports = new MeController();

@@ -32,9 +32,10 @@
     <thead>
       <tr>
         <th scope="col" colspan="2">#</th>
-        <th scope="col">Name</th>
-        <th scope="col">Cute</th>
-        <th scope="col">Date created</th>
+        {{!-- href sort with column name, type and push to helper --}}
+        <th scope="col">Name {{{sortable "name" _sort}}} </th>
+        <th scope="col">Cute {{{sortable "cute" _sort}}}</th>
+        <th scope="col">Date created {{{sortable "createdAt" _sort}}}</th>
         {{! <th scope="col" colspan="2">Date created</th> }}
         <th scope="col"></th>
       </tr>
