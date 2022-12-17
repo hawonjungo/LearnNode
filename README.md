@@ -27,7 +27,7 @@ A project created for learning NodeJS + Express + MongoDB(Mongoose) on F8(fullst
 Also understanding about the contructure with MVC and controling with CRUD.
 <br/>
 Time was running out so I couldn't do any extra work to upgrade UI.
-But one day will comeback to upgrade UX/UI, or bring this to my ReactJS portfolio website.
+But one day will comeback to upgrade UX/UI, or bring this to my ReactJS Portfolio website( relifes.net).
 
 ## Some screenshoots
 
