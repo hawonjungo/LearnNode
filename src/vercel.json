@@ -1,5 +1,6 @@
 {
   "version": 2,
+  "name": "nodejslearning",
   "builds": [
     {
       "src": "/src/index.js",
@@ -9,7 +10,7 @@
   "routers": [
     {
       "src": "/(.*)",
-      "dest": "/src/routes/index.js"
+      "dest": "/src/routes/"
     }
   ]
 }
