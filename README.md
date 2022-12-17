@@ -23,8 +23,11 @@
 <br/>
 
 # About Nodejs Learning project.
+To be honest...
+This project was created in a short time. For a job description to prepare and learn, study that knowledge.
 A project created for learning NodeJS + Express + MongoDB(Mongoose) on F8(fullstack.edu.vn).
-Also understanding about the contructure with MVC and controling with CRUD.
+Understanding about the contructure with MVC and controling with CRUD.
+
 <br/>
 Time was running out so I couldn't do any extra work to upgrade UI.
 But one day will comeback to upgrade UX/UI, or bring this to my ReactJS Portfolio website( relifes.net).
@@ -32,6 +35,7 @@ But one day will comeback to upgrade UX/UI, or bring this to my ReactJS Portfoli
 ## Some screenshoots
 
 The dashboard mainly displays the image, title, and description.
+Humh.. I tried to push this Nodejs project to Vercel or Railway but.. yeah you can enjoy the gif 🤦‍♂️
 <p align="center">
   <img src="https://user-images.githubusercontent.com/27058497/208225946-5be5fa73-8217-41e9-89e9-1b7d9944604e.gif" alt="rosadashboard" />
 </p>
@@ -42,6 +46,7 @@ The dashboard mainly displays the image, title, and description.
 </p>
 
 ## Manage page
+The reason some data didn't have created Date is because I want to keep those gifs by those data was input by hand.
 ![repo1](https://user-images.githubusercontent.com/27058497/208226647-deb2b62a-ba62-43bd-9030-6b40e2d57cef.PNG)
 ## Learn about soft delete
 ![softdelete](https://user-images.githubusercontent.com/27058497/208226730-4d561d80-aec5-4763-9c3f-41f2ec27fb58.PNG)
